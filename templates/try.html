@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Flask</title>
+    <strong><link rel="stylesheet" href="/static/css/main.css"></strong>
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8bSTvlDCh4hxfH3j6MKI-_Lj8Ym2AXJ0&sensor=true">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+      }
+    </script>
+  </head>
+  <body onload="initialize()">
+    <header>
+      <div class="container">
+        <h1 id="siteLogo" class="logo">Flask App</h1>
+        <strong><nav>
+          <ul class="menu">
+          <li><a href="/">Home</a></li>
+          <li><a href="/map">Map</a></li>
+          <li><a href="/about">About</a></li>
+          </ul></nav>
+        </strong>
+      </div>
+    </header>
+    <div class="container">
+      
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+
+    </div>
+  </body>
+</html>
