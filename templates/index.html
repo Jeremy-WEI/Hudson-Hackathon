@@ -1,13 +1,36 @@
-{% extends "layout.html" %} 
-{% block content %}
-<section id="banner">
-    <div class="inner">
-        <h2>This is Ion</h2>
-        <p>A free responsive template by <a href="http://templated.co">TEMPLATED</a></p>
-        <ul class="actions">
-            <li><a href="{{ url_for('map') }}" class="button big special">Goto Map</a></li>
-            <li><a href="#elements" class="button big alt">Learn More</a></li>
-        </ul>
+{% extends "layout.html" %} {% block content %}
+<iframe width="100%" height="705" src="https://www.youtube.com/embed/lPBcM8RLcAE?autoplay=1&controls=0&loop=1&wmode=opaque" frameborder="0" allowfullscreen></iframe>
+<!-- <div>
+    <video id="video" width="100%" height="20%" />
+    </video>
+    <div class="overlay">
+        <p>Content above your video</p>
+        <form>
+            <p>Content Below Your Video</p>
+            <label for="input">Form Input Label</label>
+            <input id="input" name="input" value="" />
+            <button type="submit">Submit</button>
+        </form>
     </div>
-</section>
+</div> -->
+<!-- <script type="text/javascript">
+var clientId = "390c2acf1e1a34ad6031"
+var clientSecret = "d679ac8863351bf3b8e1de391560d3a4872fc8c4"
+var videoURL = null
+$.ajax({
+        url: 'https://api.shutterstock.com/v2/videos/search',
+        data: "Education",
+        headers: {
+            Authorization: 'Basic ' + window.btoa(clientId + ':' + clientSecret)
+        }
+    })
+    .done(function(data) {
+        var count = data.data.length
+        if (count > 0) {
+            videoURL = data.data[Math.floor(Math.random() * count)].assets.thumb_mp4.url;
+            document.getElementById('video').src = videoURL;
+            document.getElementById('video').play();
+        }
+    });
+</script> -->
 {% endblock %}

@@ -60,7 +60,10 @@
         }
 
         function zoomToFeature(e) {
-            map.fitBounds(e.target.getBounds());
+            // map.fitBounds(e.target.getBounds());
+            $.get("/test", function(data, status) {
+                alert("Data: " + data.a)
+            });
         }
 
         function onEachFeature(feature, layer) {
