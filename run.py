@@ -1,6 +1,7 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
+
 
 
 @app.route('/')
@@ -15,7 +16,12 @@ def map():
 
 @app.route('/test')
 def test():
-    return jsonify({"a": 1})
+	stateid = request.args.get('statename')
+	print state_dict[stateid]
+	if stateid == "NY":
+		return jsonify({"a": 2})
+	else:
+		return jsonify({"a": 1})
 
 # @app.route('/about')
 # def about():

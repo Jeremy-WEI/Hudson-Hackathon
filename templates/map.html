@@ -73,11 +73,19 @@
         }
 
         function zoomToFeature(e) {
-            map.fitBounds(e.target.getBounds());
-            // $.get("/test", function(data, status) {
-            //     alert("Data: " + data.a)
-            // });
-            // alert(e.target.feature.properties.name)
+
+        // map.fitBounds(e.target.getBounds());
+        $.ajax({
+                type: "GET",
+                data: {statename: e.target.feature.properties.abbr},
+                url: "/test"
+            }).done(function(data, status){
+               alert(data.a);
+            });
+            
+        //zoom
+        //map.fitBounds(e.target.getBounds());
+
         }
 
         function onEachFeature(feature, layer) {
@@ -204,3 +212,4 @@
     </div>
 </div>
 {% endblock %}
+

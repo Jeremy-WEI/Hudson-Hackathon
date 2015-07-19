@@ -78,7 +78,7 @@ def stateCrush(projectList):
 
 if __name__ == "__main__":
     print "RUN!!"
-    PATH = '~/PycharmProjects/opendata_projects.csv'
+    PATH = '/Users/CC/Documents/workspace/HudsonHack/script/opendata_projects.csv'
     projectList , state_dict = dataCrush(PATH)
     print len(projectList)
     print state_dict['NY'].count_donors

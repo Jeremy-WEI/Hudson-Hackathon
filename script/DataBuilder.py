@@ -55,10 +55,12 @@ class Project:
         self.date_completed = row['date_completed']
 
 if __name__ == "__main__":
-    city_dict_ = open('/Users/acton/PycharmProjects/DonorChoose/HudsonHack/citydict.txt','rb')
-    state_dict_ = open('/Users/acton/PycharmProjects/DonorChoose/HudsonHack/statedict.txt','rb')
+    city_dict_ = open('/Users/CC/Documents/workspace/HudsonHack/citydict.txt','rb')
+    state_dict_ = open('/Users/CC/Documents/workspace/HudsonHack/statedict.txt','rb')
+    global city_dict
+    global state_dict
     city_dict = pickle.load(city_dict_)
     state_dict = pickle.load(state_dict_)
-    print city_dict
+    # print city_dict
     print state_dict['NY'].count_students
     print city_dict['FAIRPORT'].count_students
