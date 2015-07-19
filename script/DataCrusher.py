@@ -10,45 +10,80 @@ import scipy
 #pandas.DataFrame.from_csv();
 
 
-state_list = ["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"]
-state_dict = dict()
-projectList = []
 
-data = pandas.read_csv('~/PycharmProjects/opendata_projects.csv')
+
 
 #print(data.columns)
 #print type(data)
 #print data.shape
 #print data.index
 #print data.iloc[1]
+def dataCrush(PATH):
+    projectList = projectCrush(PATH)
+    state_dict = stateCrush(projectList)
+    return projectList, state_dict
 
-for index, row in data.iterrows():
-    aProj = ProjectClass.Project(row)
-    projectList.append(aProj)
+#     data = pandas.read_csv(PATH)
+#     state_list = ["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"]
+#     state_dict = dict()
+#     projectList = []
+#
+#     for index, row in data.iterrows():
+#         aProj = ProjectClass.Project(row)
+#         projectList.append(aProj)
+# # print len(projectList)
+# # print type(projectList[1000].total_donations)
+#     for state_name in state_list:
+#         state_dict[state_name] = ProjectClass.State(state_name)
+#     for proj in projectList:
+#         state_name = proj.school_state.upper()
+#         state_class = state_dict[state_name]
+#         if isinstance( proj.total_donations , float ) or isinstance( proj.total_donations , int ):
+#             state_class.total_donations += proj.total_donations
+#         if isinstance( proj.num_donors , float ) or isinstance( proj.num_donors , int ):
+#             state_class.count_donors += proj.num_donors
+#         state_class.count_project += 1
+#         if isinstance( proj.students_reached , float ) or isinstance( proj.students_reached , int ) :
+#             state_class.count_students += proj.students_reached
+#         state_class.subjects.append(proj.primary_focus_subject)
+#         state_class.areas.append(proj.primary_focus_area)
 
-# print len(projectList)
-# print type(projectList[1000].total_donations)
-
-for state_name in state_list:
-    state_dict[state_name] = ProjectClass.State(state_name)
-
-
-for proj in projectList:
-    state_name = proj.school_state.upper()
-    state_class = state_dict[state_name]
-    if isinstance( proj.total_donations , float ) or isinstance( proj.total_donations , int ):
-        state_class.total_donations += proj.total_donations
-    if isinstance( proj.num_donors , float ) or isinstance( proj.num_donors , int ):
-        state_class.count_donors += proj.num_donors
-    state_class.count_project += 1
-    if proj.students_reached:
-        state_class.count_students += proj.students_reached
-    state_class.subjects.append(proj.primary_focus_subject)
-    state_class.areas.append(proj.primary_focus_area)
+def projectCrush(PATH):
+    data = pandas.read_csv(PATH)
+    projectList = []
+    for index, row in data.iterrows():
+        aProj = ProjectClass.Project(row)
+        projectList.append(aProj)
+    return projectList
 
 
+def stateCrush(projectList):
+    state_dict = dict()
+    state_list = ["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"]
+    for state_name in state_list:
+        state_dict[state_name] = ProjectClass.State(state_name)
+    for proj in projectList:
+        state_name = proj.school_state.upper()
+        state_class = state_dict[state_name]
+        if isinstance( proj.total_donations , float ) or isinstance( proj.total_donations , int ):
+            state_class.total_donations += proj.total_donations
+        if isinstance( proj.num_donors , float ) or isinstance( proj.num_donors , int ):
+            state_class.count_donors += proj.num_donors
+        state_class.count_project += 1
+        if isinstance( proj.students_reached , float ) or isinstance( proj.students_reached , int ) :
+            state_class.count_students += proj.students_reached
+        state_class.subjects.append(proj.primary_focus_subject)
+        state_class.areas.append(proj.primary_focus_area)
+    return state_dict
 
-        # self.total_donations = 0
+if __name__ == "__main__":
+    print "RUN!!"
+    PATH = '~/PycharmProjects/opendata_projects.csv'
+    projectList , state_dict = dataCrush(PATH)
+    print len(projectList)
+    print state_dict['NY'].count_donors
+
+    # self.total_donations = 0
         # self.count_students = 0
         # self.count_donors = 0
         # self.count_project = 0
@@ -76,7 +111,12 @@ for proj in projectList:
         # self.funding_status = row['funding_status']
         # self.date_completed = row['date_completed']
 
-
+#
+#
+# for index, row in data.iterrows():
+#     aProj = Project(row)
+#     projectList.append(aProj)
+#
 # state_dict = dict()
 # for state_name in state_list:
 #     state_dict[state_name] = State(state_name)
