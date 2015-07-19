@@ -36,18 +36,16 @@
             style: style
         }).addTo(map);
 
-        // L.geoJson(statesData.features).bindLabel('MultiPolygon dynamic label').addTo(map);
-        // alert(statesData.features.length)
-        for (i = 0; i < statesData.features.length; i++) {
-            // // marker.addTo(map);
-            // var label = new L.Label()
-            // label.setContent(statesData.features[i].properties.abbr)
-            // alert(statesData.features[i].properties.abbr)
-            // label.setLatLng(L.multiPolygon(statesData.features[i].geometry.coordinates).getBounds().getCenter())
-            // aler t(L.multiPolygon(statesData.features[0].geometry.coordinates).getBounds().getCenter())
-            // map.showLabel(label);
-            // L.multiPolygon(statesData.features[0].geometry.coordinates).bindLabel('MultiPolygon\'s have labels as well :)').addTo(map);
-        }
+        // for (i = 0; i < statesData.features.length; i++) {
+        // // marker.addTo(map);
+        // var label = new L.Label()
+        // label.setContent(statesData.features[i].properties.abbr)
+        // alert(statesData.features[i].properties.abbr)
+        // label.setLatLng(L.multiPolygon(statesData.features[i].geometry.coordinates).getBounds().getCenter())
+        // aler t(L.multiPolygon(statesData.features[0].geometry.coordinates).getBounds().getCenter())
+        // map.showLabel(label);
+        // L.multiPolygon(statesData.features[0].geometry.coordinates).bindLabel('MultiPolygon\'s have labels as well :)').addTo(map);
+        // }
 
         var geojson;
 
@@ -123,13 +121,14 @@
 
         info.display = function(state, data) {
             content = '<h4>State Summary</h4>'
-            content += state + '<br/>'
-            content += 'Total Donations: ' + parseInt(data.total_donations, 10) + '<br/>'
-            content += 'Total Students: ' + data.count_students + '<br/>'
-            content += 'Total Donars: ' + data.count_donars + '<br/>'
-            content += 'Popular Subjects:</br>'
+            content += '<strong class="text-center">' + state + '</strong></br>'
+            content += '<span class="label label-primary">Donation</span> ' + parseInt(data.total_donations, 10) + '</br>'
+            content += '<span class="label label-success"> Students</span> ' + data.count_students + '</br>'
+            content += '<span class="label label-info"> &nbspDonars&nbsp&nbsp</span> ' + data.count_donars + '</br>'
+            content += '<span class="label label-warning"> Projects&nbsp</span> ' + data.count_project + '</br>'
+            content += '<span class="label label-danger">Popular Subjects</span></br>'
             for (i = 0; i < data.popular_subjects.length; i++) {
-                content += data.popular_subjects[i][0] + '</br>'
+                content += '&nbsp&nbsp•   ' + data.popular_subjects[i][0] + '</br>'
             }
             this._div.innerHTML = content;
         }

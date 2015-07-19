@@ -37,7 +37,7 @@ def getStateInfo():
         "count_students": stateInfo.count_students,
         "count_donars": stateInfo.count_donors,
         "count_project": stateInfo.count_project,
-        "popular_subjects": countSubjects[0:5],
+        "popular_subjects": countSubjects[0:7],
         # "areas": stateInfo.areas
     })
 
