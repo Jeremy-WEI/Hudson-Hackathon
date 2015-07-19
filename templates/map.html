@@ -117,24 +117,25 @@
         </script>
     </div>
     <div class="col-md-4" id="chart">
-        <script type="text/javascript">
+        <script>
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1.1', {
+            'packages': ['corechart', 'bar']
+        });
 
-          // Load the Visualization API and the piechart package.
-          google.load('visualization', '1.1', {'packages':['corechart', 'bar']});
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(drawChart);
 
-          // Set a callback to run when the Google Visualization API is loaded.
-          google.setOnLoadCallback(drawChart);
-
-          // Callback that creates and populates a data table,
-          // instantiates the pie chart, passes in the data and
-          // draws it.
-          function drawChart() {
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
             var raiseData = new google.visualization.DataTable();
             raiseData.addColumn('string', 'Year');
             raiseData.addColumn('number', 'RaisedMoney');
-            for (year = 2005; year < 2016; year++) { 
+            for (year = 2005; year < 2016; year++) {
                 raiseData.addRows([
-                  [year.toString(), year-1999]
+                    [year.toString(), year - 1999]
                 ]);
             }
 
@@ -142,25 +143,31 @@
             areaData.addColumn('string', 'Topping');
             areaData.addColumn('number', 'Slices');
             areaData.addRows([
-              ['Mushrooms', 3],
-              ['Onions', 1],
-              ['Olives', 15],
-              ['Zucchini', 1],
-              ['Pepperoni', 2]
+                ['Mushrooms', 3],
+                ['Onions', 1],
+                ['Olives', 15],
+                ['Zucchini', 1],
+                ['Pepperoni', 2]
             ]);
 
             // Set chart options
             var raiseOptions = {
-              title: 'Raised Money',
-              width: 300,
-              height: 250,
-              legend: { position: 'none' },
-              chart: { subtitle: 'popularity by percentage' },
+                title: 'Raised Money',
+                width: 320,
+                height: 250,
+                legend: {
+                    position: 'none'
+                },
+                chart: {
+                    subtitle: 'popularity by percentage'
+                },
             };
             // Set chart options
-            var areaOptions = {'title':'How Much Pizza You Ate Last Night',
-                           'width':300,
-                           'height':300};
+            var areaOptions = {
+                'title': 'How Much Pizza You Ate Last Night',
+                'width': 320,
+                'height': 300
+            };
 
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.ColumnChart(document.getElementById('raise'));
@@ -168,8 +175,8 @@
             var chart2 = new google.visualization.PieChart(document.getElementById('area'));
             chart2.draw(areaData, areaOptions);
 
-          }
-        </script> 
+        }
+        </script>
         <div class="row">
             <div class="col-md-12" id="raise">
             </div>
@@ -177,12 +184,9 @@
         <div class="row">
             <div class="col-md-12" id="area">
                 <script type="text/javascript">
-                </script>       
+                </script>
             </div>
         </div>
-    </div>
-    <div>
-
     </div>
 </div>
 {% endblock %}

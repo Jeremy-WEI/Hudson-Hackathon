@@ -2,6 +2,11 @@
     height: 500px;
 }
 
+#chart {
+    height: 500px;
+    overflow: scroll;
+}
+
 .info {
     padding: 6px 8px;
     font: 14px/16px Arial, Helvetica, sans-serif;
