@@ -1,8 +1,11 @@
+import DataBuilder
+import ProjectClass
 from flask import Flask, render_template, jsonify, request
-import DataBuilder, ProjectClass
+from collections import Counter
 
 city_dict, state_dict = DataBuilder.getdata()
 app = Flask(__name__)
+
 
 @app.route('/')
 def home():
@@ -14,16 +17,29 @@ def map():
     return render_template('map.html')
 
 
-@app.route('/test')
-def test():
-	#city_dict, state_dict = DataBuilder.getdata()
-	stateid = request.args.get('statename')
-	print stateid
-	print state_dict[stateid]
-	if stateid == "NY":
-		return jsonify({"a": 2})
-	else:
-		return jsonify({"a": 1})
+@app.route('/stateInfo')
+def getStateInfo():
+    state = request.args.get('state')
+    stateInfo = state_dict[state]
+    countSubjects = Counter(stateInfo.subjects).items()
+    countSubjects = sorted(countSubjects, key=lambda subject: subject[1])
+    countSubjects.reverse()
+    # print countSubjects
+    # print stateInfo.state_name
+    # print stateInfo.count_students
+    # print stateInfo.count_donors
+    # print stateInfo.count_project
+    # print type(stateInfo.subjects)
+    # print stateInfo.areas
+    return jsonify({
+        "state_name": stateInfo.state_name,
+        "total_donations": stateInfo.total_donations,
+        "count_students": stateInfo.count_students,
+        "count_donars": stateInfo.count_donors,
+        "count_project": stateInfo.count_project,
+        "popular_subjects": countSubjects[0:5],
+        # "areas": stateInfo.areas
+    })
 
 # @app.route('/about')
 # def about():

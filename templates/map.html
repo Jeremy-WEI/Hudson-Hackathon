@@ -72,27 +72,31 @@
             info.update();
         }
 
-        function zoomToFeature(e) {
+        function ZoomToFeatureAndGetInfo(e) {
 
-        // map.fitBounds(e.target.getBounds());
-        $.ajax({
-                type: "GET",
-                data: {statename: e.target.feature.properties.abbr},
-                url: "/test"
-            }).done(function(data, status){
-               alert(data.a);
+            map.fitBounds(e.target.getBounds(), {
+                maxZoom: 4
             });
-            
-        //zoom
-        //map.fitBounds(e.target.getBounds());
-
+            $.ajax({
+                    type: "GET",
+                    data: {
+                        state: e.target.feature.properties.abbr
+                    },
+                    url: "/stateInfo"
+                })
+                .done(function(data, status) {
+                    info.display(e.target.feature.properties.name, data)
+                })
+                // .fail(function(jqXHR, textStatus) {
+                //     alert(textStatus);
+                // });
         }
 
         function onEachFeature(feature, layer) {
             layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
-                click: zoomToFeature
+                click: ZoomToFeatureAndGetInfo
             });
         }
 
@@ -101,7 +105,9 @@
             onEachFeature: onEachFeature
         }).addTo(map);
 
-        var info = L.control();
+        var info = L.control({
+            position: 'topright'
+        });
 
         info.onAdd = function(map) {
             this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
@@ -111,11 +117,24 @@
 
         // method that we will use to update the control based on feature properties passed
         info.update = function(props) {
-            this._div.innerHTML = '<h4>US Population Density</h4>' + (props ?
-                '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>' : 'Hover over a state');
+            this._div.innerHTML = '<h4>State Summary</h4>' + (props ?
+                props.name + '<br/>' : 'Hover over a state');
         };
 
-        info.addTo(map);
+        info.display = function(state, data) {
+            content = '<h4>State Summary</h4>'
+            content += state + '<br/>'
+            content += 'Total Donations: ' + parseInt(data.total_donations, 10) + '<br/>'
+            content += 'Total Students: ' + data.count_students + '<br/>'
+            content += 'Total Donars: ' + data.count_donars + '<br/>'
+            content += 'Popular Subjects:</br>'
+            for (i = 0; i < data.popular_subjects.length; i++) {
+                content += data.popular_subjects[i][0] + '</br>'
+            }
+            this._div.innerHTML = content;
+        }
+
+        info.addTo(map)
 
         var legend = L.control({
             position: 'bottomright'
@@ -212,4 +231,3 @@
     </div>
 </div>
 {% endblock %}
-
