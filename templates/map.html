@@ -10,6 +10,26 @@
         }).addTo(map);
         L.geoJson(statesData).addTo(map);
 
+        function searchImage(state) {
+            var clientId = "390c2acf1e1a34ad6031"
+            var clientSecret = "d679ac8863351bf3b8e1de391560d3a4872fc8c4"
+            var imageURL = null
+            $.ajax({
+                    url: 'https://api.shutterstock.com/v2/images/search?query=' + state,
+                    data: state,
+                    headers: {
+                        Authorization: 'Basic ' + window.btoa(clientId + ':' + clientSecret)
+                    }
+                })
+                .done(function(data) {
+                    var count = data.data.length
+                    if (count > 0) {
+                        imageURL = data.data[Math.floor(Math.random() * count)].assets.preview.url;
+                    }
+                    $('#image').attr('src', imageURL);
+                });
+        }
+
         function getColor(d) {
             return d > 100000 ? '#800026' :
                 d > 50000 ? '#BD0026' :
@@ -35,17 +55,6 @@
         L.geoJson(statesData, {
             style: style
         }).addTo(map);
-
-        // for (i = 0; i < statesData.features.length; i++) {
-        // // marker.addTo(map);
-        // var label = new L.Label()
-        // label.setContent(statesData.features[i].properties.abbr)
-        // alert(statesData.features[i].properties.abbr)
-        // label.setLatLng(L.multiPolygon(statesData.features[i].geometry.coordinates).getBounds().getCenter())
-        // aler t(L.multiPolygon(statesData.features[0].geometry.coordinates).getBounds().getCenter())
-        // map.showLabel(label);
-        // L.multiPolygon(statesData.features[0].geometry.coordinates).bindLabel('MultiPolygon\'s have labels as well :)').addTo(map);
-        // }
 
         var geojson;
 
@@ -89,12 +98,16 @@
                 //     alert(textStatus);
                 // });
             $.ajax({
-                    type: "GET",
-                    data: {statename: e.target.feature.properties.abbr},
-                    url: "/chart"
-                }).done(function(data, status){
-                   drawChart(data);
-                });   
+                type: "GET",
+                data: {
+                    statename: e.target.feature.properties.abbr
+                },
+                url: "/chart"
+            }).done(function(data, status) {
+                drawChart(data);
+            });
+
+            searchImage(e.target.feature.properties.name)
         }
 
         function onEachFeature(feature, layer) {
@@ -162,7 +175,6 @@
             return div;
         };
         legend.addTo(map);
-
         </script>
     </div>
     <div class="col-md-4" id="chart">
@@ -182,7 +194,7 @@
             raiseData.addColumn('string', 'Year');
             raiseData.addColumn('number', 'Total Donations');
             var raiseObj = JSON.parse(jsonData.raise)
-            for(var key in raiseObj) {
+            for (var key in raiseObj) {
                 raiseData.addRows([
                     [key, raiseObj[key]]
                 ]);
@@ -192,7 +204,7 @@
             areaData.addColumn('string', 'Area');
             areaData.addColumn('number', 'Number');
             var areaObj = JSON.parse(jsonData.area)
-            for(var key in areaObj) {
+            for (var key in areaObj) {
                 areaData.addRows([
                     [key, areaObj[key]]
                 ]);
@@ -202,7 +214,7 @@
             var projectData = new google.visualization.DataTable();
             projectData.addColumn('string', 'Year');
             projectData.addColumn('number', 'Projects Number');
-            for(var key in projectObj) {
+            for (var key in projectObj) {
                 projectData.addRows([
                     [key, projectObj[key]]
                 ]);
@@ -242,6 +254,9 @@
         }
         google.setOnLoadCallback(drawChart);
         </script>
+        <div class="row">
+            <img src="" id="image" class="img-circle" style="margin:20px;width:330px;height:200px;">
+        </div>
         <div class="row">
             <div class="col-md-12" id="raise">
             </div>
