@@ -1,7 +1,12 @@
 {% extends "layout.html" %} {% block content %}
 
+<script>
+    var test = {{jsonstring | tojson}};
+    console.log(test);
+</script>
+
  <div class="col-md-8" id="map">
- haha
+ 
  </div>
 
  <div class="col-md-4" id="map">
