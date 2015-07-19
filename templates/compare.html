@@ -29,6 +29,7 @@ google.setOnLoadCallback(drawChart);
 // Callback that creates and populates a data table,
 // instantiates the pie chart, passes in the data and
 // draws it.
+var candidateColors = ['red', 'yellow', 'blue', 'black', 'green', 'purple', 'cyan', 'grey']
 function drawChart(jsonData, i, state) {
 	document.getElementById("state"+i).innerHTML='<h1>'+state+'</h1>';
     var raiseData = new google.visualization.DataTable();
@@ -68,7 +69,8 @@ function drawChart(jsonData, i, state) {
         height: 500,
         legend: {
             position: 'none'
-        }
+        },
+        colors: ['green']
     };
     // Set chart options
     var areaOptions = {
@@ -83,7 +85,8 @@ function drawChart(jsonData, i, state) {
         height: 500,
         legend: {
             position: 'none'
-        }
+        },
+        colors: ['purple']
     };
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.ColumnChart(document.getElementById('raise'+i));
