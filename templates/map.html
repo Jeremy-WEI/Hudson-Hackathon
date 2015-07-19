@@ -36,6 +36,19 @@
             style: style
         }).addTo(map);
 
+        // L.geoJson(statesData.features).bindLabel('MultiPolygon dynamic label').addTo(map);
+        // alert(statesData.features.length)
+        for (i = 0; i < statesData.features.length; i++) {
+            // // marker.addTo(map);
+            // var label = new L.Label()
+            // label.setContent(statesData.features[i].properties.abbr)
+            // alert(statesData.features[i].properties.abbr)
+            // label.setLatLng(L.multiPolygon(statesData.features[i].geometry.coordinates).getBounds().getCenter())
+            // aler t(L.multiPolygon(statesData.features[0].geometry.coordinates).getBounds().getCenter())
+            // map.showLabel(label);
+            // L.multiPolygon(statesData.features[0].geometry.coordinates).bindLabel('MultiPolygon\'s have labels as well :)').addTo(map);
+        }
+
         var geojson;
 
         function highlightFeature(e) {
@@ -60,10 +73,11 @@
         }
 
         function zoomToFeature(e) {
-            // map.fitBounds(e.target.getBounds());
-            $.get("/test", function(data, status) {
-                alert("Data: " + data.a)
-            });
+            map.fitBounds(e.target.getBounds());
+            // $.get("/test", function(data, status) {
+            //     alert("Data: " + data.a)
+            // });
+            // alert(e.target.feature.properties.name)
         }
 
         function onEachFeature(feature, layer) {
