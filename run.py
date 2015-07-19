@@ -30,10 +30,11 @@ def test():
             areas_dict[area] = 1
     json_result = json.dumps(areas_dict)
     print json_result
-    if stateid == "NY":
-        return jsonify({"a": json_result})
-    else:
-        return jsonify({"a": json_result})
+    return jsonify({"a": json_result})
+    # if stateid == "NY":
+    #     return jsonify({"a": json_result})
+    # else:
+    #     return jsonify({"a": json_result})
 
 @app.route('/stateInfo')
 def getStateInfo():
@@ -59,9 +60,13 @@ def getStateInfo():
         # "areas": stateInfo.areas
     })
 
-# @app.route('/about')
-# def about():
-#   return render_template('index.html')
+@app.route('/compare')
+def compare():
+	firststate = request.args.get('firststate')
+	secondstate = request.args.get('secondstate')
+	return jsonify({'firststate': firststate, 'secondstate': secondstate})
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

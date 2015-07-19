@@ -83,6 +83,7 @@
                     url: "/stateInfo"
                 })
                 .done(function(data, status) {
+                    window.currentstate = e.target.feature.properties.abbr;
                     info.display(e.target.feature.properties.name, data)
                 })
                 // .fail(function(jqXHR, textStatus) {
@@ -138,6 +139,9 @@
                 content += '&nbsp&nbsp•   ' + data.popular_subjects[i][0] + '</br>'
             }
             this._div.innerHTML = content;
+
+           
+
         }
 
         info.addTo(map)
@@ -219,9 +223,45 @@
                 chart.draw(raiseData, raiseOptions);
                 var chart2 = new google.visualization.PieChart(document.getElementById('area'));
                 chart2.draw(areaData, areaOptions);
+                
+
+
+                var statelist = ["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"];
+
+                for (var i=0; i< statelist.length;i++){
+                    
+                    $('#combo').append($('<option>', {
+                        value: i,
+                        text:  statelist[i]
+                    }));
+                };
+
+               
+              $('#button1').click(function(){ 
+                var secondstate = $('#combo option:selected').text();
+                var firststate =  window.currentstate;
+                
+                window.location.href = '/compare?firststate=' + firststate + "&secondstate=" + secondstate;
+
+                /*$.ajax({
+                    type: "GET",
+                    data: {firststate: firststate, secondstate:secondstate},
+                    url: "/compare"
+                }).done(function(data, status){
+                   drawChart(data.a);
+                });   */
+
+              });
+               
             }
             google.setOnLoadCallback(drawChart);
+
+
         </script>
+        <div class="row" id="StateName"> 
+            <select id="combo">
+            </select>
+        <input id="button1" type="button" value="Compare" /></div>
         <div class="row">
             <div class="col-md-12" id="raise">
             </div>
@@ -232,6 +272,9 @@
                 </script>
             </div>
         </div>
+      
+
     </div>
+
 </div>
 {% endblock %}
