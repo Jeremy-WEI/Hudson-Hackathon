@@ -1,8 +1,8 @@
 from flask import Flask, render_template, jsonify, request
+import DataBuilder, ProjectClass
 
+city_dict, state_dict = DataBuilder.getdata()
 app = Flask(__name__)
-
-
 
 @app.route('/')
 def home():
@@ -16,7 +16,9 @@ def map():
 
 @app.route('/test')
 def test():
+	#city_dict, state_dict = DataBuilder.getdata()
 	stateid = request.args.get('statename')
+	print stateid
 	print state_dict[stateid]
 	if stateid == "NY":
 		return jsonify({"a": 2})
