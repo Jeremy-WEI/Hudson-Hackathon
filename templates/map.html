@@ -93,7 +93,7 @@
                     data: {statename: e.target.feature.properties.abbr},
                     url: "/chart"
                 }).done(function(data, status){
-                   drawChart(data.a);
+                   drawChart(data);
                 });   
         }
 
@@ -179,19 +179,20 @@
                 var raiseData = new google.visualization.DataTable();
                 raiseData.addColumn('string', 'Year');
                 raiseData.addColumn('number', 'RaisedMoney');
-                for (year = 2005; year < 2016; year++) {
+                var raiseObj = JSON.parse(jsonData.raise)
+                for (var key in raiseObj) {
                     raiseData.addRows([
-                        [year.toString(), year - 1999]
+                        [key, raiseObj[key]]
                     ]);
                 }
 
                 var areaData = new google.visualization.DataTable();
                 areaData.addColumn('string', 'Topping');
                 areaData.addColumn('number', 'Slices');
-                var jsonObj = JSON.parse(jsonData)
-                for(var key in jsonObj) {
+                var areaObj = JSON.parse(jsonData.area)
+                for(var key in areaObj) {
                     areaData.addRows([
-                        [key, jsonObj[key]]
+                        [key, areaObj[key]]
                     ]);
                 }
 
