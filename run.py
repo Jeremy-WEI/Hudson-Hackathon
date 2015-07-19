@@ -135,9 +135,11 @@ def test():
     for year in xrange(2008, 2015):
         raised_money[year] = state_year_dict[stateid].Years[year].total_donations
     json_result2 = json.dumps(raised_money)
-    print json_result2
-    #print json_result
-    return jsonify({"area": json_result, "raise": json_result2})
+    projects_num = {}
+    for year in xrange(2008, 2015):
+        projects_num[year] = state_year_dict[stateid].Years[year].count_project
+    json_result3 = json.dumps(projects_num)
+    return jsonify({"area": json_result, "raise": json_result2, "projects": json_result3})
 
 
 @app.route('/stateInfo')

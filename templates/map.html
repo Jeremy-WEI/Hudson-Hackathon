@@ -180,21 +180,31 @@
         function drawChart(jsonData) {
             var raiseData = new google.visualization.DataTable();
             raiseData.addColumn('string', 'Year');
-            raiseData.addColumn('number', 'RaisedMoney');
+            raiseData.addColumn('number', 'Total Donations');
             var raiseObj = JSON.parse(jsonData.raise)
-            for (var key in raiseObj) {
+            for(var key in raiseObj) {
                 raiseData.addRows([
                     [key, raiseObj[key]]
                 ]);
             }
 
             var areaData = new google.visualization.DataTable();
-            areaData.addColumn('string', 'Topping');
-            areaData.addColumn('number', 'Slices');
+            areaData.addColumn('string', 'Area');
+            areaData.addColumn('number', 'Number');
             var areaObj = JSON.parse(jsonData.area)
             for(var key in areaObj) {
                 areaData.addRows([
                     [key, areaObj[key]]
+                ]);
+            }
+
+            var projectObj = JSON.parse(jsonData.projects)
+            var projectData = new google.visualization.DataTable();
+            projectData.addColumn('string', 'Year');
+            projectData.addColumn('number', 'Projects Number');
+            for(var key in projectObj) {
+                projectData.addRows([
+                    [key, projectObj[key]]
                 ]);
             }
 
@@ -205,21 +215,28 @@
                 height: 250,
                 legend: {
                     position: 'none'
-                },
-                chart: {
-                    subtitle: 'popularity by percentage'
-                },
+                }
             };
             // Set chart options
             var areaOptions = {
-                'title': 'How Much Pizza You Ate Last Night',
+                'title': 'Total Donations',
                 'width': 320,
                 'height': 300
             };
-
+            // Set chart options
+            var projectOptions = {
+                title: 'Project Numbers',
+                width: 320,
+                height: 250,
+                legend: {
+                    position: 'none'
+                }
+            };
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.ColumnChart(document.getElementById('raise'));
             chart.draw(raiseData, raiseOptions);
+            var chart3 = new google.visualization.ColumnChart(document.getElementById('project'));
+            chart3.draw(projectData, projectOptions);
             var chart2 = new google.visualization.PieChart(document.getElementById('area'));
             chart2.draw(areaData, areaOptions);
         }
@@ -227,6 +244,10 @@
         </script>
         <div class="row">
             <div class="col-md-12" id="raise">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="project">
             </div>
         </div>
         <div class="row">
