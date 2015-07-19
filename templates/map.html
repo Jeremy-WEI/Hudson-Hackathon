@@ -10,20 +10,40 @@
         }).addTo(map);
         L.geoJson(statesData).addTo(map);
 
+        function searchImage(state) {
+            var clientId = "390c2acf1e1a34ad6031"
+            var clientSecret = "d679ac8863351bf3b8e1de391560d3a4872fc8c4"
+            var imageURL = null
+            $.ajax({
+                    url: 'https://api.shutterstock.com/v2/images/search?query=' + state,
+                    data: state,
+                    headers: {
+                        Authorization: 'Basic ' + window.btoa(clientId + ':' + clientSecret)
+                    }
+                })
+                .done(function(data) {
+                    var count = data.data.length
+                    if (count > 0) {
+                        imageURL = data.data[Math.floor(Math.random() * count)].assets.preview.url;
+                    }
+                    $('#image').attr('src', imageURL);
+                });
+        }
+
         function getColor(d) {
-            return d > 1000 ? '#800026' :
-                d > 500 ? '#BD0026' :
-                d > 200 ? '#E31A1C' :
-                d > 100 ? '#FC4E2A' :
-                d > 50 ? '#FD8D3C' :
-                d > 20 ? '#FEB24C' :
-                d > 10 ? '#FED976' :
+            return d > 100000 ? '#800026' :
+                d > 50000 ? '#BD0026' :
+                d > 20000 ? '#E31A1C' :
+                d > 10000 ? '#FC4E2A' :
+                d > 5000 ? '#FD8D3C' :
+                d > 1000 ? '#FEB24C' :
+                d > 500 ? '#FED976' :
                 '#FFEDA0';
         }
 
         function style(feature) {
             return {
-                fillColor: getColor(feature.properties.density),
+                fillColor: getColor(feature.properties.projects),
                 weight: 2,
                 opacity: 1,
                 color: 'white',
@@ -35,17 +55,6 @@
         L.geoJson(statesData, {
             style: style
         }).addTo(map);
-
-        // for (i = 0; i < statesData.features.length; i++) {
-        // // marker.addTo(map);
-        // var label = new L.Label()
-        // label.setContent(statesData.features[i].properties.abbr)
-        // alert(statesData.features[i].properties.abbr)
-        // label.setLatLng(L.multiPolygon(statesData.features[i].geometry.coordinates).getBounds().getCenter())
-        // aler t(L.multiPolygon(statesData.features[0].geometry.coordinates).getBounds().getCenter())
-        // map.showLabel(label);
-        // L.multiPolygon(statesData.features[0].geometry.coordinates).bindLabel('MultiPolygon\'s have labels as well :)').addTo(map);
-        // }
 
         var geojson;
 
@@ -90,12 +99,16 @@
                 //     alert(textStatus);
                 // });
             $.ajax({
-                    type: "GET",
-                    data: {statename: e.target.feature.properties.abbr},
-                    url: "/chart"
-                }).done(function(data, status){
-                   drawChart(data.a);
-                });   
+                type: "GET",
+                data: {
+                    statename: e.target.feature.properties.abbr
+                },
+                url: "/chart"
+            }).done(function(data, status) {
+                drawChart(data);
+            });
+
+            searchImage(e.target.feature.properties.name)
         }
 
         function onEachFeature(feature, layer) {
@@ -123,12 +136,12 @@
 
         // method that we will use to update the control based on feature properties passed
         info.update = function(props) {
-            this._div.innerHTML = '<h4>State Summary</h4>' + (props ?
-                props.name + '<br/>' : 'Hover over a state');
+            this._div.innerHTML = '<h4>State Summary</h4><hr style="margin: 10px;">' + (props ?
+                props.name + '<br/>' : 'Click to get Summary');
         };
 
         info.display = function(state, data) {
-            content = '<h4>State Summary</h4>'
+            content = '<h4>State Summary</h4><hr style="margin: 10px;">'
             content += '<strong class="text-center">' + state + '</strong></br>'
             content += '<span class="label label-primary">Donation</span> ' + parseInt(data.total_donations, 10) + '</br>'
             content += '<span class="label label-success"> Students</span> ' + data.count_students + '</br>'
@@ -153,9 +166,10 @@
         legend.onAdd = function(map) {
 
             var div = L.DomUtil.create('div', 'info legend'),
-                grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+                grades = [0, 500, 1000, 5000, 10000, 20000, 50000, 100000],
                 labels = [];
 
+            div.innerHTML = '<b>Number of Projects</b><hr style="margin: 10px;">'
             for (var i = 0; i < grades.length; i++) {
                 div.innerHTML +=
                     '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
@@ -169,101 +183,116 @@
     </div>
     <div class="col-md-4" id="chart">
         <script>
-           // Load the Visualization API and the piechart package.
-            google.load('visualization', '1.1', {
-                'packages': ['corechart', 'bar']
-            });
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1.1', {
+            'packages': ['corechart', 'bar']
+        });
 
-            // Set a callback to run when the Google Visualization API is loaded.
+        // Set a callback to run when the Google Visualization API is loaded.
 
-            // Callback that creates and populates a data table,
-            // instantiates the pie chart, passes in the data and
-            // draws it.
-            function drawChart(jsonData) {
-                var raiseData = new google.visualization.DataTable();
-                raiseData.addColumn('string', 'Year');
-                raiseData.addColumn('number', 'RaisedMoney');
-                for (year = 2005; year < 2016; year++) {
-                    raiseData.addRows([
-                        [year.toString(), year - 1999]
-                    ]);
-                }
-
-                var areaData = new google.visualization.DataTable();
-                areaData.addColumn('string', 'Topping');
-                areaData.addColumn('number', 'Slices');
-                var jsonObj = JSON.parse(jsonData)
-                for(var key in jsonObj) {
-                    areaData.addRows([
-                        [key, jsonObj[key]]
-                    ]);
-                }
-
-                // Set chart options
-                var raiseOptions = {
-                    title: 'Raised Money',
-                    width: 320,
-                    height: 250,
-                    legend: {
-                        position: 'none'
-                    },
-                    chart: {
-                        subtitle: 'popularity by percentage'
-                    },
-                };
-                // Set chart options
-                var areaOptions = {
-                    'title': 'How Much Pizza You Ate Last Night',
-                    'width': 320,
-                    'height': 300
-                };
-
-                // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.ColumnChart(document.getElementById('raise'));
-                chart.draw(raiseData, raiseOptions);
-                var chart2 = new google.visualization.PieChart(document.getElementById('area'));
-                chart2.draw(areaData, areaOptions);
-                
-
-
-                var statelist = ["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"];
-
-                for (var i=0; i< statelist.length;i++){
-                    
-                    $('#combo').append($('<option>', {
-                        value: i,
-                        text:  statelist[i]
-                    }));
-                };
-
-               
-              $('#button1').click(function(){ 
-                var secondstate = $('#combo option:selected').text();
-                var firststate =  window.currentstate;
-                
-                window.location.href = '/compare?firststate=' + firststate + "&secondstate=" + secondstate;
-
-                /*$.ajax({
-                    type: "GET",
-                    data: {firststate: firststate, secondstate:secondstate},
-                    url: "/compare"
-                }).done(function(data, status){
-                   drawChart(data.a);
-                });   */
-
-              });
-               
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart(jsonData) {
+            var raiseData = new google.visualization.DataTable();
+            raiseData.addColumn('string', 'Year');
+            raiseData.addColumn('number', 'Total Donations');
+            var raiseObj = JSON.parse(jsonData.raise)
+            for (var key in raiseObj) {
+                raiseData.addRows([
+                    [key, raiseObj[key]]
+                ]);
             }
-            google.setOnLoadCallback(drawChart);
+
+            var areaData = new google.visualization.DataTable();
+            areaData.addColumn('string', 'Area');
+            areaData.addColumn('number', 'Number');
+            var areaObj = JSON.parse(jsonData.area)
+            for (var key in areaObj) {
+                areaData.addRows([
+                    [key, areaObj[key]]
+                ]);
+            }
+
+            var projectObj = JSON.parse(jsonData.projects)
+            var projectData = new google.visualization.DataTable();
+            projectData.addColumn('string', 'Year');
+            projectData.addColumn('number', 'Projects Number');
+            for (var key in projectObj) {
+                projectData.addRows([
+                    [key, projectObj[key]]
+                ]);
+            }
+
+            // Set chart options
+            var raiseOptions = {
+                title: 'Raised Money',
+                width: 320,
+                height: 250,
+                legend: {
+                    position: 'none'
+                }
+            };
+            // Set chart options
+            var areaOptions = {
+                'title': 'Total Donations',
+                'width': 320,
+                'height': 300
+            };
+            // Set chart options
+            var projectOptions = {
+                title: 'Project Numbers',
+                width: 320,
+                height: 250,
+                legend: {
+                    position: 'none'
+                }
+            };
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ColumnChart(document.getElementById('raise'));
+            chart.draw(raiseData, raiseOptions);
+            var chart3 = new google.visualization.ColumnChart(document.getElementById('project'));
+            chart3.draw(projectData, projectOptions);
+            var chart2 = new google.visualization.PieChart(document.getElementById('area'));
+            chart2.draw(areaData, areaOptions);
 
 
+            var statelist = ["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"];
+
+            for (var i=0; i< statelist.length;i++){
+                
+                $('#combo').append($('<option>', {
+                    value: i,
+                    text:  statelist[i]
+                }));
+            };
+
+           
+          $('#button1').click(function(){ 
+            var secondstate = $('#combo option:selected').text();
+            var firststate =  window.currentstate;
+            
+            window.location.href = '/compare?firststate=' + firststate + "&secondstate=" + secondstate;
+
+
+        });
+    };
+        google.setOnLoadCallback(drawChart);
+ 
         </script>
         <div class="row" id="StateName"> 
             <select id="combo">
             </select>
         <input id="button1" type="button" value="Compare" /></div>
         <div class="row">
+            <img src="" id="image" class="img-circle" style="margin:20px;width:330px;height:200px;">
+        </div>
+        <div class="row">
             <div class="col-md-12" id="raise">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="project">
             </div>
         </div>
         <div class="row">

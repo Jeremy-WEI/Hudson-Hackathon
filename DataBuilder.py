@@ -9,7 +9,6 @@ import scipy.io as sio
 import pickle
 import math
 
-
 class State:
     def __init__(self,state_name):
         self.state_name = state_name
@@ -52,16 +51,27 @@ class Project:
         self.total_donations = row['total_donations']
         self.num_donors = row['num_donors']
         self.funding_status = row['funding_status']
+        date = str(row['date_posted'])
+        year = date.split('-')[0]
+        self.date_posted = int(year)
         self.date_completed = row['date_completed']
+
+class StateYear:
+    def __init__(self,state_name):
+        self.state_name = state_name
+        self.Years = dict()
 
 def getdata():
     city_dict_ = open('citydict.txt','rb')
     state_dict_ = open('statedict.txt','rb')
+    state_year_dict_ = open('state_year_dict.txt','rb')
     global city_dict
     global state_dict
+    global state_year_dict
     city_dict = pickle.load(city_dict_)
     state_dict = pickle.load(state_dict_)
-    return city_dict, state_dict
+    state_year_dict = pickle.load(state_year_dict_)
+    return [city_dict, state_dict, state_year_dict]
 
 
 if __name__ == "__main__":
