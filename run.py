@@ -1,5 +1,6 @@
 import DataBuilder
 import ProjectClass
+import json
 from flask import Flask, render_template, jsonify, request
 from collections import Counter
 
@@ -16,6 +17,23 @@ def home():
 def map():
     return render_template('map.html')
 
+@app.route('/chart')
+def test():
+    #city_dict, state_dict = DataBuilder.getdata()
+    stateid = request.args.get('statename')
+    areas = state_dict[stateid].areas
+    areas_dict = {}
+    for area in areas:
+        if area in areas_dict:
+            areas_dict[area] += 1
+        else:
+            areas_dict[area] = 1
+    json_result = json.dumps(areas_dict)
+    print json_result
+    if stateid == "NY":
+        return jsonify({"a": json_result})
+    else:
+        return jsonify({"a": json_result})
 
 @app.route('/stateInfo')
 def getStateInfo():
