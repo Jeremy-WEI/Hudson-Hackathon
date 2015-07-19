@@ -184,6 +184,8 @@
     <div class="col-md-4" id="chart">
         <script>
         // Load the Visualization API and the piechart package.
+        var candidateColors = ['red', 'yellow', 'blue', 'black', 'green']
+
         google.load('visualization', '1.1', {
             'packages': ['corechart', 'bar']
         });
@@ -232,7 +234,7 @@
                 legend: {
                     position: 'none'
                 },
-                colors: ['red']
+                colors: [candidateColors[Math.floor(Math.random() * candidateColors.length)]]
             };
             // Set chart options
             var areaOptions = {
@@ -248,7 +250,7 @@
                 legend: {
                     position: 'none'
                 },
-                colors: ['green']
+                colors: [candidateColors[Math.floor(Math.random() * candidateColors.length)]]
             };
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.ColumnChart(document.getElementById('raise'));
