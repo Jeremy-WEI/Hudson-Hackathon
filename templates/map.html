@@ -89,12 +89,14 @@
                 //     alert(textStatus);
                 // });
             $.ajax({
-                    type: "GET",
-                    data: {statename: e.target.feature.properties.abbr},
-                    url: "/chart"
-                }).done(function(data, status){
-                   drawChart(data.a);
-                });   
+                type: "GET",
+                data: {
+                    statename: e.target.feature.properties.abbr
+                },
+                url: "/chart"
+            }).done(function(data, status) {
+                drawChart(data.a);
+            });
         }
 
         function onEachFeature(feature, layer) {
@@ -123,7 +125,7 @@
         // method that we will use to update the control based on feature properties passed
         info.update = function(props) {
             this._div.innerHTML = '<h4>State Summary</h4><hr style="margin: 10px;">' + (props ?
-                props.name + '<br/>' : 'Hover over a state');
+                props.name + '<br/>' : 'Click to get Summary');
         };
 
         info.display = function(state, data) {
@@ -166,62 +168,62 @@
     </div>
     <div class="col-md-4" id="chart">
         <script>
-           // Load the Visualization API and the piechart package.
-            google.load('visualization', '1.1', {
-                'packages': ['corechart', 'bar']
-            });
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1.1', {
+            'packages': ['corechart', 'bar']
+        });
 
-            // Set a callback to run when the Google Visualization API is loaded.
+        // Set a callback to run when the Google Visualization API is loaded.
 
-            // Callback that creates and populates a data table,
-            // instantiates the pie chart, passes in the data and
-            // draws it.
-            function drawChart(jsonData) {
-                var raiseData = new google.visualization.DataTable();
-                raiseData.addColumn('string', 'Year');
-                raiseData.addColumn('number', 'RaisedMoney');
-                for (year = 2005; year < 2016; year++) {
-                    raiseData.addRows([
-                        [year.toString(), year - 1999]
-                    ]);
-                }
-
-                var areaData = new google.visualization.DataTable();
-                areaData.addColumn('string', 'Topping');
-                areaData.addColumn('number', 'Slices');
-                var jsonObj = JSON.parse(jsonData)
-                for(var key in jsonObj) {
-                    areaData.addRows([
-                        [key, jsonObj[key]]
-                    ]);
-                }
-
-                // Set chart options
-                var raiseOptions = {
-                    title: 'Raised Money',
-                    width: 320,
-                    height: 250,
-                    legend: {
-                        position: 'none'
-                    },
-                    chart: {
-                        subtitle: 'popularity by percentage'
-                    },
-                };
-                // Set chart options
-                var areaOptions = {
-                    'title': 'How Much Pizza You Ate Last Night',
-                    'width': 320,
-                    'height': 300
-                };
-
-                // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.ColumnChart(document.getElementById('raise'));
-                chart.draw(raiseData, raiseOptions);
-                var chart2 = new google.visualization.PieChart(document.getElementById('area'));
-                chart2.draw(areaData, areaOptions);
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart(jsonData) {
+            var raiseData = new google.visualization.DataTable();
+            raiseData.addColumn('string', 'Year');
+            raiseData.addColumn('number', 'RaisedMoney');
+            for (year = 2005; year < 2016; year++) {
+                raiseData.addRows([
+                    [year.toString(), year - 1999]
+                ]);
             }
-            google.setOnLoadCallback(drawChart);
+
+            var areaData = new google.visualization.DataTable();
+            areaData.addColumn('string', 'Topping');
+            areaData.addColumn('number', 'Slices');
+            var jsonObj = JSON.parse(jsonData)
+            for (var key in jsonObj) {
+                areaData.addRows([
+                    [key, jsonObj[key]]
+                ]);
+            }
+
+            // Set chart options
+            var raiseOptions = {
+                title: 'Raised Money',
+                width: 320,
+                height: 250,
+                legend: {
+                    position: 'none'
+                },
+                chart: {
+                    subtitle: 'popularity by percentage'
+                },
+            };
+            // Set chart options
+            var areaOptions = {
+                'title': 'How Much Pizza You Ate Last Night',
+                'width': 320,
+                'height': 300
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ColumnChart(document.getElementById('raise'));
+            chart.draw(raiseData, raiseOptions);
+            var chart2 = new google.visualization.PieChart(document.getElementById('area'));
+            chart2.draw(areaData, areaOptions);
+        }
+        google.setOnLoadCallback(drawChart);
         </script>
         <div class="row">
             <div class="col-md-12" id="raise">
