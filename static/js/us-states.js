@@ -6,7 +6,8 @@ var statesData = {
         "properties": {
             "name": "Alabama",
             "abbr": "AL",
-            "density": 94.65
+            "density": 94.65,
+            "projects": 7125,
         },
         "geometry": {
             "type": "Polygon",
@@ -54,7 +55,8 @@ var statesData = {
         "properties": {
             "name": "Alaska",
             "abbr": "AK",
-            "density": 1.264
+            "density": 1.264,
+            "projects": 1867,
         },
         "geometry": {
             "type": "MultiPolygon",
@@ -1297,7 +1299,8 @@ var statesData = {
         "properties": {
             "name": "Arizona",
             "abbr": "AZ",
-            "density": 57.05
+            "density": 57.05,
+            "projects": 11472
         },
         "geometry": {
             "type": "Polygon",
@@ -1344,7 +1347,8 @@ var statesData = {
         "properties": {
             "name": "Arkansas",
             "abbr": "AR",
-            "density": 56.43
+            "density": 56.43,
+            "projects": 7147,
         },
         "geometry": {
             "type": "Polygon",
@@ -1396,7 +1400,8 @@ var statesData = {
         "properties": {
             "name": "California",
             "abbr": "CA",
-            "density": 241.7
+            "density": 241.7,
+            "projects": 146371,
         },
         "geometry": {
             "type": "Polygon",
@@ -1504,7 +1509,8 @@ var statesData = {
         "properties": {
             "name": "Colorado",
             "abbr": "CO",
-            "density": 49.33
+            "density": 49.33,
+            "projects": 8163,
         },
         "geometry": {
             "type": "Polygon",
@@ -1535,7 +1541,8 @@ var statesData = {
         "properties": {
             "name": "Connecticut",
             "abbr": "CT",
-            "density": 739.1
+            "density": 739.1,
+            "projects": 8719
         },
         "geometry": {
             "type": "Polygon",
@@ -1566,7 +1573,8 @@ var statesData = {
         "properties": {
             "name": "Delaware",
             "abbr": "DE",
-            "density": 464.3
+            "density": 464.3,
+            "projects": 1895
         },
         "geometry": {
             "type": "Polygon",
@@ -1594,7 +1602,8 @@ var statesData = {
         "properties": {
             "name": "District of Columbia",
             "abbr": "DC",
-            "density": 10065
+            "density": 10065,
+            "projects": 7527
         },
         "geometry": {
             "type": "Polygon",
@@ -1614,7 +1623,8 @@ var statesData = {
         "properties": {
             "name": "Florida",
             "abbr": "FL",
-            "density": 353.4
+            "density": 353.4,
+            "projects": 37024
         },
         "geometry": {
             "type": "Polygon",
@@ -1707,7 +1717,8 @@ var statesData = {
         "properties": {
             "name": "Georgia",
             "abbr": "GA",
-            "density": 169.5
+            "density": 169.5,
+            "projects": 19717
         },
         "geometry": {
             "type": "Polygon",
@@ -1773,7 +1784,8 @@ var statesData = {
         "properties": {
             "name": "Hawaii",
             "abbr": "HI",
-            "density": 214.1
+            "density": 214.1,
+            "projects": 3348
         },
         "geometry": {
             "type": "MultiPolygon",
@@ -1855,7 +1867,8 @@ var statesData = {
         "properties": {
             "name": "Idaho",
             "abbr": "ID",
-            "density": 19.15
+            "density": 19.15,
+            "projects": 2722
         },
         "geometry": {
             "type": "Polygon",
@@ -1936,7 +1949,8 @@ var statesData = {
         "properties": {
             "name": "Illinois",
             "abbr": "IL",
-            "density": 231.5
+            "density": 231.5,
+            "projects": 44897
         },
         "geometry": {
             "type": "Polygon",
@@ -2018,7 +2032,8 @@ var statesData = {
         "properties": {
             "name": "Indiana",
             "abbr": "IN",
-            "density": 181.7
+            "density": 181.7,
+            "projects": 19405
         },
         "geometry": {
             "type": "Polygon",
@@ -2079,7 +2094,8 @@ var statesData = {
         "properties": {
             "name": "Iowa",
             "abbr": "IA",
-            "density": 54.81
+            "density": 54.81,
+            "projects": 3776
         },
         "geometry": {
             "type": "Polygon",
@@ -2144,7 +2160,8 @@ var statesData = {
         "properties": {
             "name": "Kansas",
             "abbr": "KS",
-            "density": 35.09
+            "density": 35.09,
+            "projects": 3436
         },
         "geometry": {
             "type": "Polygon",
@@ -2172,7 +2189,8 @@ var statesData = {
         "properties": {
             "name": "Kentucky",
             "abbr": "KY",
-            "density": 110
+            "density": 110,
+            "projects": 5394
         },
         "geometry": {
             "type": "Polygon",
@@ -2262,7 +2280,8 @@ var statesData = {
         "properties": {
             "name": "Louisiana",
             "abbr": "LA",
-            "density": 105
+            "density": 105,
+            "projects": 14326
         },
         "geometry": {
             "type": "Polygon",
@@ -2353,7 +2372,8 @@ var statesData = {
         "properties": {
             "name": "Maine",
             "abbr": "ME",
-            "density": 43.04
+            "density": 43.04,
+            "projects": 4041
         },
         "geometry": {
             "type": "Polygon",
@@ -2434,7 +2454,8 @@ var statesData = {
         "properties": {
             "name": "Maryland",
             "abbr": "MD",
-            "density": 596.3
+            "density": 596.3,
+            "projects": 11021
         },
         "geometry": {
             "type": "MultiPolygon",
@@ -2519,7 +2540,8 @@ var statesData = {
         "properties": {
             "name": "Massachusetts",
             "abbr": "MA",
-            "density": 840.2
+            "density": 840.2,
+            "projects": 11546
         },
         "geometry": {
             "type": "Polygon",
@@ -2569,7 +2591,8 @@ var statesData = {
         "properties": {
             "name": "Michigan",
             "abbr": "MI",
-            "density": 173.9
+            "density": 173.9,
+            "projects": 14866
         },
         "geometry": {
             "type": "MultiPolygon",
@@ -2750,7 +2773,8 @@ var statesData = {
         "properties": {
             "name": "Minnesota",
             "abbr": "MN",
-            "density": 67.14
+            "density": 67.14,
+            "projects": 5428
         },
         "geometry": {
             "type": "Polygon",
@@ -2848,7 +2872,8 @@ var statesData = {
         "properties": {
             "name": "Mississippi",
             "abbr": "MS",
-            "density": 63.50
+            "density": 63.50,
+            "projects": 8137
         },
         "geometry": {
             "type": "Polygon",
@@ -2909,7 +2934,8 @@ var statesData = {
         "properties": {
             "name": "Missouri",
             "abbr": "MO",
-            "density": 87.26
+            "density": 87.26,
+            "projects": 14035
         },
         "geometry": {
             "type": "Polygon",
@@ -2977,7 +3003,8 @@ var statesData = {
         "properties": {
             "name": "Montana",
             "abbr": "MT",
-            "density": 6.858
+            "density": 6.858,
+            "projects": 1041
         },
         "geometry": {
             "type": "Polygon",
@@ -3044,7 +3071,8 @@ var statesData = {
         "properties": {
             "name": "Nebraska",
             "abbr": "NE",
-            "density": 23.97
+            "density": 23.97,
+            "projects": 1842
         },
         "geometry": {
             "type": "Polygon",
@@ -3088,7 +3116,8 @@ var statesData = {
         "properties": {
             "name": "Nevada",
             "abbr": "NV",
-            "density": 24.80
+            "density": 24.80,
+            "projects": 9876
         },
         "geometry": {
             "type": "Polygon",
@@ -3124,7 +3153,8 @@ var statesData = {
         "properties": {
             "name": "New Hampshire",
             "abbr": "NH",
-            "density": 147
+            "density": 147,
+            "projects": 1767
         },
         "geometry": {
             "type": "Polygon",
@@ -3167,7 +3197,8 @@ var statesData = {
         "properties": {
             "name": "New Jersey",
             "abbr": "NJ",
-            "density": 1189
+            "density": 1189,
+            "projects": 11877
         },
         "geometry": {
             "type": "Polygon",
@@ -3214,7 +3245,8 @@ var statesData = {
         "properties": {
             "name": "New Mexico",
             "abbr": "NM",
-            "density": 17.16
+            "density": 17.16,
+            "projects": 3078
         },
         "geometry": {
             "type": "Polygon",
@@ -3246,7 +3278,8 @@ var statesData = {
         "properties": {
             "name": "New York",
             "abbr": "NY",
-            "density": 412.3
+            "density": 412.3,
+            "projects": 79898
         },
         "geometry": {
             "type": "Polygon",
@@ -3329,7 +3362,8 @@ var statesData = {
         "properties": {
             "name": "North Carolina",
             "abbr": "NC",
-            "density": 198.2
+            "density": 198.2,
+            "projects": 47976
         },
         "geometry": {
             "type": "Polygon",
@@ -3405,7 +3439,8 @@ var statesData = {
         "properties": {
             "name": "North Dakota",
             "abbr": "ND",
-            "density": 9.916
+            "density": 9.916,
+            "projects": 551
         },
         "geometry": {
             "type": "Polygon",
@@ -3436,7 +3471,8 @@ var statesData = {
         "properties": {
             "name": "Ohio",
             "abbr": "OH",
-            "density": 281.9
+            "density": 281.9,
+            "projects": 9351
         },
         "geometry": {
             "type": "Polygon",
@@ -3498,7 +3534,8 @@ var statesData = {
         "properties": {
             "name": "Oklahoma",
             "abbr": "OK",
-            "density": 55.22
+            "density": 55.22,
+            "projects": 17424
         },
         "geometry": {
             "type": "Polygon",
@@ -3558,7 +3595,8 @@ var statesData = {
         "properties": {
             "name": "Oregon",
             "abbr": "OR",
-            "density": 40.33
+            "density": 40.33,
+            "projects": 8265
         },
         "geometry": {
             "type": "Polygon",
@@ -3629,7 +3667,8 @@ var statesData = {
         "properties": {
             "name": "Pennsylvania",
             "abbr": "PA",
-            "density": 284.3
+            "density": 284.3,
+            "projects": 17087
         },
         "geometry": {
             "type": "Polygon",
@@ -3677,7 +3716,8 @@ var statesData = {
         "properties": {
             "name": "Rhode Island",
             "abbr": "RI",
-            "density": 1006
+            "density": 1006,
+            "projects": 2459
         },
         "geometry": {
             "type": "MultiPolygon",
@@ -3713,7 +3753,8 @@ var statesData = {
         "properties": {
             "name": "South Carolina",
             "abbr": "SC",
-            "density": 155.4
+            "density": 155.4,
+            "projects": 20864
         },
         "geometry": {
             "type": "Polygon",
@@ -3772,7 +3813,8 @@ var statesData = {
         "properties": {
             "name": "South Dakota",
             "abbr": "SD",
-            "density": 98.07
+            "density": 98.07,
+            "projects": 1198
         },
         "geometry": {
             "type": "Polygon",
@@ -3816,7 +3858,8 @@ var statesData = {
         "properties": {
             "name": "Tennessee",
             "abbr": "TN",
-            "density": 88.08
+            "density": 88.08,
+            "projects": 16370
         },
         "geometry": {
             "type": "Polygon",
@@ -3874,7 +3917,8 @@ var statesData = {
         "properties": {
             "name": "Texas",
             "abbr": "TX",
-            "density": 98.07
+            "density": 98.07,
+            "projects": 48091
         },
         "geometry": {
             "type": "Polygon",
@@ -4041,7 +4085,8 @@ var statesData = {
         "properties": {
             "name": "Utah",
             "abbr": "UT",
-            "density": 34.30
+            "density": 34.30,
+            "projects": 11148
         },
         "geometry": {
             "type": "Polygon",
@@ -4068,7 +4113,8 @@ var statesData = {
         "properties": {
             "name": "Vermont",
             "abbr": "VT",
-            "density": 67.73
+            "density": 67.73,
+            "projects": 653
         },
         "geometry": {
             "type": "Polygon",
@@ -4111,7 +4157,8 @@ var statesData = {
         "properties": {
             "name": "Virginia",
             "abbr": "VA",
-            "density": 204.5
+            "density": 204.5,
+            "projects": 12964
         },
         "geometry": {
             "type": "MultiPolygon",
@@ -4216,7 +4263,8 @@ var statesData = {
         "properties": {
             "name": "Washington",
             "abbr": "WA",
-            "density": 102.6
+            "density": 102.6,
+            "projects": 13069
         },
         "geometry": {
             "type": "MultiPolygon",
@@ -4313,7 +4361,8 @@ var statesData = {
         "properties": {
             "name": "West Virginia",
             "abbr": "WV",
-            "density": 77.06
+            "density": 77.06,
+            "projects": 2762
         },
         "geometry": {
             "type": "Polygon",
@@ -4393,7 +4442,8 @@ var statesData = {
         "properties": {
             "name": "Wisconsin",
             "abbr": "WI",
-            "density": 105.2
+            "density": 105.2,
+            "projects": 8403
         },
         "geometry": {
             "type": "Polygon",
@@ -4483,7 +4533,8 @@ var statesData = {
         "properties": {
             "name": "Wyoming",
             "abbr": "WY",
-            "density": 5.851
+            "density": 5.851,
+            "projects": 510
         },
         "geometry": {
             "type": "Polygon",
@@ -4511,7 +4562,8 @@ var statesData = {
         "properties": {
             "name": "Puerto Rico",
             "abbr": "PR",
-            "density": 1082
+            "density": 1082,
+            "projects": 0
         },
         "geometry": {
             "type": "Polygon",
