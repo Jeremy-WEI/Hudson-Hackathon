@@ -169,12 +169,36 @@ def getStateInfo():
 
 @app.route('/compare')
 def compare():
-	firststate = request.args.get('firststate')
-	secondstate = request.args.get('secondstate')
+    result = {}
+    firststate = request.args.get('firststate')
+    secondstate = request.args.get('secondstate')
+    for stateid in [firststate, secondstate]:
+        areas = state_dict[stateid].areas
+        areas_dict = {}
+        for area in areas:
+            if area in areas_dict:
+                areas_dict[area] += 1
+            else:
+                areas_dict[area] = 1
+        json_result = json.dumps(areas_dict)
 
-	jsonstring =  jsonify({'firststate': firststate, 'secondstate': secondstate})
-
-	return render_template('compare.html', jsonstring=jsonstring)
+        raised_money = {}
+        for year in xrange(2008, 2015):
+            raised_money[year] = state_year_dict[stateid].Years[year].total_donations
+        json_result2 = json.dumps(raised_money)
+        projects_num = {}
+        for year in xrange(2008, 2015):
+            projects_num[year] = state_year_dict[stateid].Years[year].count_project
+        json_result3 = json.dumps(projects_num)
+        result[stateid] = {"area": json_result, "raise": json_result2, "projects": json_result3}
+    # print result
+    # print jsonify(result)
+    print json.dumps(result)
+    # jsonstring =  jsonify(result)
+    # print jsonstring
+    # jsonstring = json.dumps(jsonstring)
+    # print jsonstring
+    return render_template('compare.html', jsonstring=result)
 	# return jsonify({'firststate': firststate, 'secondstate': secondstate})
 
 

@@ -1,10 +1,141 @@
 {% extends "layout.html" %} {% block content %}
 
- <div class="col-md-8" id="map">
- haha
+ 
+ <script type="text/javascript">
+ var test = {{jsonstring | tojson}};
+ //var jsonResult = JSON.parse(test);
+
+ var i = 1
+
+function loopchart(i){
+for (var key in test) {
+    console.log(key);
+    console.log(test[key]);
+    drawChart(test[key], i.toString(), key);
+    i = i+1;
+	}
+};
+
+setTimeout(function(){
+	loopchart(i);
+}, 1000);
+ // Load the Visualization API and the piechart package.
+google.load('visualization', '1.1', {
+    'packages': ['corechart', 'bar']
+});
+google.setOnLoadCallback(drawChart);
+// Set a callback to run when the Google Visualization API is loaded.
+
+// Callback that creates and populates a data table,
+// instantiates the pie chart, passes in the data and
+// draws it.
+function drawChart(jsonData, i, state) {
+	document.getElementById("state"+i).innerHTML='<h1>'+state+'</h1>';
+    var raiseData = new google.visualization.DataTable();
+    raiseData.addColumn('string', 'Year');
+    raiseData.addColumn('number', 'Total Donations');
+    var raiseObj = JSON.parse(jsonData.raise);
+    for (var key in raiseObj) {
+        raiseData.addRows([
+            [key, raiseObj[key]]
+        ]);
+    }
+
+    var areaData = new google.visualization.DataTable();
+    areaData.addColumn('string', 'Area');
+    areaData.addColumn('number', 'Number');
+    var areaObj = JSON.parse(jsonData.area)
+    for (var key in areaObj) {
+        areaData.addRows([
+            [key, areaObj[key]]
+        ]);
+    }
+
+    var projectObj = JSON.parse(jsonData.projects)
+    var projectData = new google.visualization.DataTable();
+    projectData.addColumn('string', 'Year');
+    projectData.addColumn('number', 'Projects Number');
+    for (var key in projectObj) {
+        projectData.addRows([
+            [key, projectObj[key]]
+        ]);
+    }
+
+    // Set chart options
+    var raiseOptions = {
+        title: 'Raised Money',
+        width: 500,
+        height: 500,
+        legend: {
+            position: 'none'
+        }
+    };
+    // Set chart options
+    var areaOptions = {
+        'title': 'Total Donations',
+        'width': 500,
+        'height': 500
+    };
+    // Set chart options
+    var projectOptions = {
+        title: 'Project Numbers',
+        width: 500,
+        height: 500,
+        legend: {
+            position: 'none'
+        }
+    };
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById('raise'+i));
+    chart.draw(raiseData, raiseOptions);
+    var chart3 = new google.visualization.ColumnChart(document.getElementById('project'+i));
+    chart3.draw(projectData, projectOptions);
+    var chart2 = new google.visualization.PieChart(document.getElementById('area'+i));
+    chart2.draw(areaData, areaOptions);
+};
+
+
+//google.setOnLoadCallback(drawChart);
+
+ </script>
+
+ <div class="col-md-6" id="map1">
+ 	<div class="row">
+        <div class="col-md-12" id="state1" style="text-align:center">
+        </div>		
+ 	</div>
+ 	<div class="row">
+        <div class="col-md-12" id="raise1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="project1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="area1">
+             
+        </div>
+    </div>
  </div>
 
- <div class="col-md-4" id="map">
-hehe
+ <div class="col-md-6" id="map2">
+ 	<div class="row">
+        <div class="col-md-12" id="state2" style="text-align:center">
+        </div>		
+ 	</div>
+    <div class="row">
+        <div class="col-md-12" id="raise2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="project2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="area2">
+            
+        </div>
+    </div>
  </div>
 {% endblock %}
