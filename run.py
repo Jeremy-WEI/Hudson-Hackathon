@@ -118,6 +118,7 @@ def home():
 def map():
     return render_template('map.html')
 
+
 @app.route('/chart')
 def test():
     #city_dict, state_dict = DataBuilder.getdata()
@@ -137,6 +138,7 @@ def test():
     print json_result2
     #print json_result
     return jsonify({"area": json_result, "raise": json_result2})
+
 
 @app.route('/stateInfo')
 def getStateInfo():
