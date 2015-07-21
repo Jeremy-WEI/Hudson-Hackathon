@@ -169,6 +169,8 @@ def getStateInfo():
 
 @app.route('/compare')
 def compare():
+    result = {}
+ 
     firststate = request.args.get('firststate')
     secondstate = request.args.get('secondstate')
     for stateid in [firststate, secondstate]:
