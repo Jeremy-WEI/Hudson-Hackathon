@@ -2,15 +2,15 @@
 import ProjectClass
 from flask import Flask, render_template, jsonify, request
 from collections import Counter
-import pandas
-import numpy
-import flask
-import sys
-import os
-import scipy
-import scipy.io as sio
-import pickle
-import math
+# import pandas
+# import numpy
+# import flask
+# import sys
+# import os
+# import scipy
+# import scipy.io as sio
+# import pickle
+# import math
 import json
 
 
