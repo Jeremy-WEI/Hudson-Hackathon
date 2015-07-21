@@ -1,4 +1,5 @@
 __author__ = 'acton'
+import ProjectClass
 import pandas
 import numpy
 import flask
@@ -8,6 +9,7 @@ import scipy
 import scipy.io as sio
 import pickle
 import math
+
 
 class State:
     def __init__(self,state_name):
@@ -51,9 +53,6 @@ class Project:
         self.total_donations = row['total_donations']
         self.num_donors = row['num_donors']
         self.funding_status = row['funding_status']
-        date = str(row['date_posted'])
-        year = date.split('-')[0]
-        self.date_posted = int(year)
         self.date_completed = row['date_completed']
 
 class StateYear:
@@ -61,26 +60,124 @@ class StateYear:
         self.state_name = state_name
         self.Years = dict()
 
-def getdata():
-    city_dict_ = open('citydict.txt','rb')
-    state_dict_ = open('statedict.txt','rb')
-    state_year_dict_ = open('state_year_dict.txt','rb')
-    global city_dict
-    global state_dict
-    global state_year_dict
-    city_dict = pickle.load(city_dict_)
-    state_dict = pickle.load(state_dict_)
-    state_year_dict = pickle.load(state_year_dict_)
-    return [city_dict, state_dict, state_year_dict]
+def cityBuilder(city_list,projectList):
+    city_dict = dict()
+    for city_name in city_list:
+        city_dict[city_name] = ProjectClass.City(city_name)
+    for proj in projectList:
+        city_name = proj.school_city.upper()
+        city_class = city_dict[city_name]
+        if isinstance( proj.total_donations , float ) or isinstance( proj.total_donations , int ):
+            city_class.total_donations += proj.total_donations
+        if isinstance( proj.num_donors , float ) or isinstance( proj.num_donors , int ):
+            city_class.count_donors += proj.num_donors
+        city_class.count_project += 1
+        if isinstance( proj.students_reached , float ) or isinstance( proj.students_reached , int ) :
+            if not math.isnan(proj.students_reached):
+                city_class.count_students += int(proj.students_reached)
+        city_class.subjects.append(proj.primary_focus_subject)
+        city_class.areas.append(proj.primary_focus_area)
+    return city_dict
+
+def stateBuilder(state_list,projectList):
+    state_dict = dict()
+    for state_name in state_list:
+        state_dict[state_name] = ProjectClass.State(state_name)
+    for proj in projectList:
+        state_name = proj.school_state.upper()
+        state_class = state_dict[state_name]
+        if isinstance( proj.total_donations , float ) or isinstance( proj.total_donations , int ):
+            state_class.total_donations += proj.total_donations
+        if isinstance( proj.num_donors , float ) or isinstance( proj.num_donors , int ):
+            state_class.count_donors += proj.num_donors
+        state_class.count_project += 1
+        if isinstance( proj.students_reached , float ) or isinstance( proj.students_reached , int ) :
+            if not math.isnan(proj.students_reached):
+                state_class.count_students += int( proj.students_reached)
+        state_class.subjects.append(proj.primary_focus_subject)
+        state_class.areas.append(proj.primary_focus_area)
+    return state_dict
+
+def StatetYearBuilder():
+    state_list = ["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"]
+    state_proj_dict = dict()
+    project_list_ = open('project_list_dict.txt','rb')
+    projectList = pickle.load(project_list_)
+    year_list = range(2000,2015)
+    state_year_dict = dict()
+    for state in state_list:
+        state_proj_dict[state] = []
+        for proj in projectList:
+            if proj.school_state == state:
+                state_proj_dict[state].append(proj)
+    for state in state_list:
+        state_year_class = StateYear(state)
+        for year in year_list:
+                state_year_class.Years[year] = State(state)
+        for proj in state_proj_dict[state]:
+            for year in year_list:
+                if int(proj.date_posted) == year:
+                    state_year_class.Years[year].total_donations += int(proj.total_donations)
+                    if  not math.isnan(proj.students_reached):
+                        state_year_class.Years[year].count_students += int(proj.students_reached )
+                    state_year_class.Years[year].count_donors  += int(proj.num_donors)
+                    state_year_class.Years[year].count_project += 1
+                    state_year_class.Years[year].subjects.append( proj.primary_focus_subject)
+                    state_year_class.Years[year].areas.append( proj.primary_focus_area )
+        state_year_dict[state] = state_year_class
+        return state_year_dict
+
+
+
+def dataDump(city_list,project_list):
+    citylist_file = open('citylist.txt', 'wb')
+    projectlist_file = open('projectlist.txt','wb')
+    pickle.dump(project_list, projectlist_file)
+    pickle.dump(city_list, citylist_file)
+    projectlist_file.close()
+    citylist_file.close()
+
+
+def dataDump2(city_dict,state_dict):
+    citydict_file = open('citydict.txt', 'wb')
+    statedict_file = open('statedict.txt','wb')
+    pickle.dump(state_dict, statedict_file)
+    pickle.dump(city_dict, citydict_file)
+    citydict_file.close()
+    statedict_file.close()
+
+def dataDump3(state_year_dict):
+    state_year_dict_file = open('state_year_dict.txt', 'wb')
+    pickle.dump(state_year_dict,state_year_dict_file)
+    state_year_dict_file.close()
+
+
+def dataDump4(state_city_dict):
+    state_city_dict_file = open('state_city_dict.txt', 'wb')
+    pickle.dump(state_city_dict,state_city_dict_file)
+    state_city_dict_file.close()
+
+
+def projectCrush(PATH):
+    data = pandas.read_csv(PATH)
+    city_list= cityList(data)
+    projectList = []
+    for index, row in data.iterrows():
+        aProj = ProjectClass.Project(row)
+        projectList.append(aProj)
+    return projectList, city_list
+
+
+def cityList(data):
+    city_list = []
+    for city in data['school_city']:
+        if city.upper() not in city_list:
+            city_list.append(city.upper())
+    return city_list
+
 
 
 if __name__ == "__main__":
-    city_dict_ = open('citydict.txt','rb')
-    state_dict_ = open('statedict.txt','rb')
-    global city_dict
-    global state_dict
-    city_dict = pickle.load(city_dict_)
-    state_dict = pickle.load(state_dict_)
-    # print city_dict
-    print state_dict['NY'].count_students
-    print city_dict['FAIRPORT'].count_students
+    print "Use methods to build your data structure"
+
+
