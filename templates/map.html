@@ -276,7 +276,9 @@
           $('#button1').click(function(){
             var secondstate = $('#combo option:selected').text();
             var firststate =  window.currentstate;
-            
+            if(secondstate == "State to Compare"){
+                secondstate = "NY"
+            }
             window.location.href = '/compare?firststate=' + firststate + "&secondstate=" + secondstate;
 
 
